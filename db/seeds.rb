@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+10.times do 
+    Post.create(title: Faker::Book.title, author: Faker::Movies::HarryPotter.character, mood: Faker::Verb.base, content: Faker::TvShows::Friends.quote, date: Faker::Date.between(from: 2.days.ago, to: Date.today), likes: rand(1..100))
+end
+
+8.times  do 
+    Comment.create(name: Faker::TvShows::FamilyGuy.character, content: Faker::Movies::HarryPotter.quote, post_id: rand(1..10))
+end
+
