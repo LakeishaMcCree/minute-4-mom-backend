@@ -35,7 +35,10 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
+    @post = Post.find(params[:id])
     @post.destroy
+
+    redirect_to posts_path
   end
 
   private
