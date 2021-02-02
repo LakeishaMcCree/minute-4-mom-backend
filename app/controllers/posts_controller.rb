@@ -15,8 +15,8 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
+    #binding.pry
     @post = Post.new(post_params)
-
     if @post.save
       render json: @post, status: :created, location: @post
     else
@@ -46,6 +46,6 @@ class PostsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:title, :author, :mood, :content, :likes, :date)
+      params.require(:post).permit(:title, :author, :mood, :content, :likes, :date, comment_attributes: [:id, :name, :content, :post_id])
     end
 end

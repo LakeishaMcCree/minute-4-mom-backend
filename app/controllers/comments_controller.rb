@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
+  #skip_before_action :verify_authenticity_token
 
   # GET /comments
   def index
     if params[:post_id]
-      @post = Post.find(params[:quote_id])
+      @post = Post.find(params[:post_id])
       @comments = @post.comments
     else
       @comments = Comment.all
@@ -19,13 +20,16 @@ class CommentsController < ApplicationController
 
   # POST /comments
   def create
-    @comment = Comment.new(comment_params)
-
-    if @comment.save
-      render json: @comment, status: :created, location: @comment
-    else
-      render json: @comment.errors, status: :unprocessable_entity
-    end
+    @post = Post.find(params[:post_id])
+      @comment = @post.comments.create(comment_params)
+    redirect_to post_path(@post)
+    #binding.pry
+    #@comment = Comment.new(comment_params)
+    #if @comment.save
+     # render json: @comment, status: :created, location: @comment
+    #else
+     # render json: @comment.errors, status: :unprocessable_entity
+    #end
   end
 
   # PATCH/PUT /comments/1
@@ -39,7 +43,14 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
     @comment.destroy
+    redirect_to post_path(@post)
+    #@comment = Comment.find(params["id"])
+    #@post = Post.find(@comment.post_id)
+    #@comment.destroy
+    #render json: @post
   end
 
   private
