@@ -43,20 +43,20 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.find(params[:id])
     @comment.destroy
-    redirect_to post_path(@post)
+    #@post = Post.find(params[:post_id])
+    #@comment = @post.comments.find(params[:id])
+    #redirect_to post_path(@post)
     #@comment = Comment.find(params["id"])
     #@post = Post.find(@comment.post_id)
     #@comment.destroy
-    #render json: @post
+    render json: @comment
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = Comment.find(params[:id])
+      @comment = Comment.find(params[:post_id])
     end
 
     # Only allow a trusted parameter "white list" through.
